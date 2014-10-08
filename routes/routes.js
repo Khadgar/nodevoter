@@ -125,36 +125,39 @@ module.exports = function (app, passport, UserDetails, Votes, io) {
 			process.nextTick(function () {
 				Votes.findOne({
 					id : '1'
-				}, function (error, vote, opt1) {
+				}, function (error, vote) {
 					vote.option1 += 1;
 					vote.save();
+					io.emit('votes', vote.option1+','+vote.option2+','+vote.option3);
 				});
 			});
 		} else if (req.body.options == 'option2') {
 			process.nextTick(function () {
 				Votes.findOne({
 					id : '1'
-				}, function (error, vote, opt2) {
+				}, function (error, vote) {
 					vote.option2 += 1;
 					vote.save();
+					io.emit('votes', vote.option1+','+vote.option2+','+vote.option3);
 				});
 			});
 		} else if (req.body.options == 'option3') {
 			process.nextTick(function () {
 				Votes.findOne({
 					id : '1'
-				}, function (error, vote, opt3) {
+				}, function (error, vote) {
 					vote.option3 += 1;
 					vote.save();
+					io.emit('votes', vote.option1+','+vote.option2+','+vote.option3);
 				});
 			});
 		}
 
-		getResult(function (data) {
-			io.emit('votes', data);
-			console.log("post: " + data);
-
-		});
+//		getResult(function (data) {
+//			io.emit('votes', data);
+//			console.log("post: " + data);
+//
+//		});
 
 		res.redirect('/');
 
