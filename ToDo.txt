@@ -1,0 +1,10 @@
+Grafikonon megjeleníteni a szavazas eredmenyet.
+
+Megcsinalni hogy egy felhasznalo csak egyszer szavazhasson (+1 rekord az adatbazisban: isVoted (boolean), admin tudja reseteleni)
+
+Tobb adat regisztracional
+
+Kitalalni valami modszert szavazas leallitasara, (pl idozito)
+
+Kommentezni
+
