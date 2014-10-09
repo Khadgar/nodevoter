@@ -21,21 +21,6 @@
 	  
 		socket.emit('message', 'hello server kerem szepen a szavazas eredmenyet');
 	
-		socket.on('option1', function(msg){
-		console.log(msg);
-		$('#container').highcharts().series[0].data[0].update(msg);
-		
-	});
-		socket.on('option2', function(msg){
-		console.log(msg);
-		$('#container').highcharts().series[0].data[1].update(msg);
-	});
-	
-		socket.on('option3', function(msg){
-		console.log(msg);
-		$('#container').highcharts().series[0].data[2].update(msg);
-	});
-	
 	socket.on('votes', function(msg){
 		var res = msg.split(",");
 		console.log(res[0]+'-'+res[1]+'-'+res[2]);
@@ -56,7 +41,7 @@
             text: 'Daniel\'s chart'
         },
         subtitle: {
-            text: ''
+            text: 'Vote results'
         },
         xAxis: {
             categories: [
@@ -68,25 +53,25 @@
         yAxis: {
             min: 0,
             title: {
-                text: 'Value'
+                text: '# of votes'
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                '<td style="padding:0"><b>{point.y}</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
         },
         plotOptions: {
             column: {
-                pointPadding: 0.2,
+                pointPadding: 0.1,
                 borderWidth: 0
             }
         },
         series: [{
-            name: 'Value',
+            name: '# of votes',
             data: [0,0,0]
 
         }]
