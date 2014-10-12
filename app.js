@@ -42,6 +42,46 @@ require(path.join(__dirname, './auth.js'))(passport, LocalStrategy, UserDetails)
 //routing in routes.js
 require(path.join(__dirname, './routes/routes.js'))(app,passport,UserDetails,Votes,io);
 
+//timer begin
+//todo: ezt a logikat at kellene rakni masik fajlba. 
+//az utolso lezart szavas eredmenyet el lehetne tarolni adatbazisban igy barmelyik oldalon lekerdezheto lenne
+var sec = 20;
+var timeout = setTimeout(function() {}, sec * 1000);
+
+
+setInterval(function() {
+    console.log('Time left: '+getTimeLeft(timeout)+'s');
+	
+	//elküldi a klienseknek hogy mennyi van hatra a kovetkezo szavazasig
+	io.emit('timeleft', getTimeLeft(timeout));
+	
+	//itt resetelem a timert, ide lehetne beirni, hogy mi tortenjen ha lejar az ido
+	if(getTimeLeft(timeout) == '0'){
+		timeout = setTimeout(function() {}, sec * 1000);
+		
+		getResult(function (data) {
+				io.emit('lastres', data);
+				console.log(data);
+			});
+	}
+}, 1000);
+
+function getTimeLeft(timeout) {
+    return Math.ceil((timeout._idleStart + timeout._idleTimeout - Date.now()) / 1000);
+}
+
+function getResult(callback) {
+		var votes = null;
+		process.nextTick(function () {
+			Votes.findOne({
+				id : '1'
+			}, function (err, vote) {
+				votes = vote.option1 + ',' + vote.option2 + ',' + vote.option3;
+				callback(votes);
+			});
+		});
+	};
+//timer end
 
 //create server
 http.listen(app.get('port'), function () {
