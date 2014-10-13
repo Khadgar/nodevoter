@@ -1,0 +1,17 @@
+https://devcenter.heroku.com/articles/keys
+
+ha nem megy a validate
+
+http://stackoverflow.com/questions/16384655/git-push-heroku-master-error-permission-denied-publickey
+
+-heroku keys:add ~/.ssh/id_rsa.pub
+
+1 Create a new public key
+
+	ssh-keygen -t rsa
+
+2 Upload to heroku
+
+	heroku keys:add /root/.ssh/id_rsa.pub
+
+

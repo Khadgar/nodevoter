@@ -59,12 +59,24 @@ setInterval(function() {
 	if(getTimeLeft(timeout) == '0'){
 		timeout = setTimeout(function() {}, sec * 1000);
 		
-		getResult(function (data) {
-				io.emit('lastres', data);
-				console.log(data);
-			});
+//		getResult(function (data) {
+//				io.emit('lastres', data);
+//				console.log(data);
+//			});
+
+		//itt meghivom a getResult(callback) fuggvenyt de parameternek az altalam definialt query-t adom
+		//lefutasa vegen a getresults meghivja a parameterenek adott fuggvenyt aminek a lekerdezes eredmenyet adta parameternek 
+		
+		getResult(query);
 	}
 }, 1000);
+
+//itt definialom a a callback fuggvenyt parameterrel. ha ezt nem tennem meg akkor a getresults vegen a callback(votes) -nak nem lenne ertelme
+
+function query(mydata){
+	io.emit('lastres',mydata);
+	console.log(mydata);
+}
 
 function getTimeLeft(timeout) {
     return Math.ceil((timeout._idleStart + timeout._idleTimeout - Date.now()) / 1000);
