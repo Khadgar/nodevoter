@@ -27,6 +27,7 @@ app.use(passport.session());
 
 //mongoose.connect('mongodb://localhost/MyDatabase');
 
+//host https://mongolab.com
 mongoose.connect('mongodb://dani:dani@ds063859.mongolab.com:63859/mydatabase')
 
 
@@ -36,64 +37,18 @@ var UserDetails = require(path.join(__dirname, './models/user.js'))(mongoose);
 //vote model in vote.js
 var Votes = require(path.join(__dirname, './models/votes.js'))(mongoose);
 
+//voteresults collection
+var VoteResults = require(path.join(__dirname, './models/voteresults.js'))(mongoose);
+
 //authentication in auth.js
 require(path.join(__dirname, './auth.js'))(passport, LocalStrategy, UserDetails);
 
 //routing in routes.js
 require(path.join(__dirname, './routes/routes.js'))(app,passport,UserDetails,Votes,io);
 
-//timer begin
-//todo: ezt a logikat at kellene rakni masik fajlba. 
-//az utolso lezart szavas eredmenyet el lehetne tarolni adatbazisban igy barmelyik oldalon lekerdezheto lenne
-var sec = 20;
-var timeout = setTimeout(function() {}, sec * 1000);
+//decision making in decision.js
+require(path.join(__dirname, './decision.js'))(VoteResults, Votes, io);
 
-
-setInterval(function() {
-    console.log('Time left: '+getTimeLeft(timeout)+'s');
-	
-	//elküldi a klienseknek hogy mennyi van hatra a kovetkezo szavazasig
-	io.emit('timeleft', getTimeLeft(timeout));
-	
-	//itt resetelem a timert, ide lehetne beirni, hogy mi tortenjen ha lejar az ido
-	if(getTimeLeft(timeout) == '0'){
-		timeout = setTimeout(function() {}, sec * 1000);
-		
-//		getResult(function (data) {
-//				io.emit('lastres', data);
-//				console.log(data);
-//			});
-
-		//itt meghivom a getResult(callback) fuggvenyt de parameternek az altalam definialt query-t adom
-		//lefutasa vegen a getresults meghivja a parameterenek adott fuggvenyt aminek a lekerdezes eredmenyet adta parameternek 
-		
-		getResult(query);
-	}
-}, 1000);
-
-//itt definialom a a callback fuggvenyt parameterrel. ha ezt nem tennem meg akkor a getresults vegen a callback(votes) -nak nem lenne ertelme
-
-function query(mydata){
-	io.emit('lastres',mydata);
-	console.log(mydata);
-}
-
-function getTimeLeft(timeout) {
-    return Math.ceil((timeout._idleStart + timeout._idleTimeout - Date.now()) / 1000);
-}
-
-function getResult(callback) {
-		var votes = null;
-		process.nextTick(function () {
-			Votes.findOne({
-				id : '1'
-			}, function (err, vote) {
-				votes = vote.option1 + ',' + vote.option2 + ',' + vote.option3;
-				callback(votes);
-			});
-		});
-	};
-//timer end
 
 //create server
 http.listen(app.get('port'), function () {

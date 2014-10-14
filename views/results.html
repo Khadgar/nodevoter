@@ -16,65 +16,69 @@
 	
 	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	<script>
-	
-		var socket = io();
-	  
-		socket.emit('message', 'hello server kerem szepen a szavazas eredmenyet');
-	
-	socket.on('votes', function(msg){
+
+	var socket = io();
+
+	socket.emit('message', 'hello server kerem szepen a szavazas eredmenyet');
+
+	socket.on('votes', function (msg) {
 		var res = msg.split(",");
-		console.log(res[0]+'-'+res[1]+'-'+res[2]);
+		console.log(res[0] + '-' + res[1] + '-' + res[2]);
 		$('#container').highcharts().series[0].data[0].update(parseInt(res[0]));
 		$('#container').highcharts().series[0].data[1].update(parseInt(res[1]));
 		$('#container').highcharts().series[0].data[2].update(parseInt(res[2]));
 	});
 	
-
 	
+	socket.on('allresults', function (msg) {
+		console.log(msg);
+	});
+	
+
     $('#container').highcharts({
-        chart: {
-            type: 'column'
-			
-        },
+    	chart : {
+    		type : 'column'
+    	},
 
-        title: {
-            text: 'Daniel\'s chart'
-        },
-        subtitle: {
-            text: 'Vote results'
-        },
-        xAxis: {
-            categories: [
-                'Option 1',
-                'Option 2',
-				'Option 3'
-            ]
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: '# of votes'
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y}</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.1,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: '# of votes',
-            data: [0,0,0]
+    	title : {
+    		text : 'Daniel\'s chart'
+    	},
+    	subtitle : {
+    		text : 'Vote results'
+    	},
+    	xAxis : {
+    		categories : [
+    			'Option 1',
+    			'Option 2',
+    			'Option 3'
+    		]
+    	},
+    	yAxis : {
+    		min : 0,
+    		title : {
+    			text : '# of votes'
+    		}
+    	},
+    	tooltip : {
+    		headerFormat : '<span style="font-size:10px">{point.key}</span><table>',
+    		pointFormat : '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    		'<td style="padding:0"><b>{point.y}</b></td></tr>',
+    		footerFormat : '</table>',
+    		shared : true,
+    		useHTML : true
+    	},
+    	plotOptions : {
+    		column : {
+    			pointPadding : 0.1,
+    			borderWidth : 0
+    		}
+    	},
+    	series : [{
+    			name : '# of votes',
+    			data : [0, 0, 0]
 
-        }]
+    		}
+    	]
     });
 
 	</script>
