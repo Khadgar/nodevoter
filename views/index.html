@@ -16,22 +16,16 @@
 	<p><a href="/results">vote results</a></p>
 	<p><a href="/admin">admin page</a></p>
 	<br>
-	<p>time left:</p>
+	<p><b>time left:</b></p>
 	<p id = "timer"></p>
-	<p>results of the last vote:</p>
-	<p id = "last"></p>
 	<script>
+	
 		var socket = io();
 			
 		socket.on('timeleft', function(msg){
 			document.getElementById("timer").innerHTML = msg;	
 		});
 		
-		socket.on('lastres', function(msg){
-			document.getElementById("last").innerHTML = msg;	
-		});
-		
-
 	</script>
 	
   </body>
