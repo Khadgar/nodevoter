@@ -1,9 +1,15 @@
-module.exports = function (VoteResults, Votes, io) {
+module.exports = function (VoteResults, Votes, Settings, io) {
 	//timer begin
 	//todo: ezt a logikat at kellene rakni masik fajlba.
 	//az utolso lezart szavas eredmenyet el lehetne tarolni adatbazisban igy barmelyik oldalon lekerdezheto lenne
-	var sec = 120;
-	var timeout = setTimeout(function () {}, sec * 1000);
+	//var sec = 10;
+	//var timeout = setTimeout(function () {}, sec * 1000);
+	
+	Settings.findOne({
+		id : '1'
+	}, function (error, set) {
+		timeout = setTimeout(function () {}, set.votetimeout * 1000);
+	});
 
 	setInterval(function () {
 		console.log('Time left: ' + getTimeLeft(timeout) + 's');
@@ -12,8 +18,16 @@ module.exports = function (VoteResults, Votes, io) {
 		io.emit('timeleft', getTimeLeft(timeout));
 
 		//itt resetelem a timert, ide lehetne beirni, hogy mi tortenjen ha lejar az ido
-		if (getTimeLeft(timeout) == '0') {
-			timeout = setTimeout(function () {}, sec * 1000);
+		if (getTimeLeft(timeout) <= '0') {
+
+			Settings.findOne({
+				id : '1'
+			}, function (error, set) {
+				timeout = setTimeout(function () {}, set.votetimeout * 1000);
+			});
+
+			
+			//timeout = setTimeout(function () {}, sec * 1000);
 			
 			//itt meghivom a insertResults(callback) fuggvenyt de parameternek az altalam definialt query-t adom
 			//lefutasa vegen a getresults meghivja a parameterenek adott fuggvenyt aminek a lekerdezes eredmenyet adta parameternek
@@ -21,7 +35,7 @@ module.exports = function (VoteResults, Votes, io) {
 			insertResults(query);
 			//getAllResults(sendallresults);
 		}
-	}, 1000);
+	}, 10000);
 
 	//itt definialom a a callback fuggvenyt parameterrel. ha ezt nem tennem meg akkor a insertResults vegen a callback(votes) -nak nem lenne ertelme
 	function query(mydata) {

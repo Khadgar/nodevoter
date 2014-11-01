@@ -1,0 +1,22 @@
+<html>
+  <body>
+	<center><h1>Welcome <b><%= username %>!</b></h1></center>
+	<h2>Here you can add new user to the database</h2>
+	<br>
+	<form action="/signup" method="post">
+		<div>
+			<label>Username:</label>
+			<input type="text" name="username"/>
+		</div>
+		<div>
+			<label>Password:</label>
+			<input type="password" name="password"/>
+		</div>
+		<div>
+			<input type="submit" value="Add New User"/>
+		</div>
+	</form>
+	<p><a href="/">index</a></p>
+	<p><a href="/reset">reset votes</a></p>
+  </body>
+</html>

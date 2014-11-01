@@ -1,33 +1,72 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>NodeVoter - Index</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+
+  </head>
+
   <body>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <h1>Made by Daniel Szaniszlo</h1>
-	<br>
-	<h2>Standing:</h2>
-	<p>Option1: <b><%= o1 %></b></p>
-	<p>Option2: <b><%= o2 %></b></p>
-	<p>Option3: <b><%= o3 %></b></p>
-	<br>
-	<p><a href="/login">log in</a></p>
-	<p><a href="/logout">log out</a></p>
-	<p><a href="/personal">personal</a></p>
-	<p><a href="/vote">vote</a></p>
-	<p><a href="/results">vote results</a></p>
-	<p><a href="/admin">admin page</a></p>
-	<p><a href="/led">led</a></p>
-	<br>
-	<p><b>time left:</b></p>
-	<p id = "timer"></p>
-	<script>
-	
-		var socket = io();
-			
-		socket.on('timeleft', function(msg){
-			document.getElementById("timer").innerHTML = msg;	
-		});
-		
-	</script>
-	
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">NodeVoter</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/personal">Index</a></li>
+            <li><a href="/results">Vote Results</a></li>					
+          </ul>
+		  <form class="navbar-form navbar-right" role="form" action="/login" method="post">
+            <div class="form-group">
+              <input type="text" placeholder="Username" class="form-control" name="username">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="password">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Welcome!</h1>
+        <p>This application is a part of my MSC thesis. You can find the whole project on github.</p>
+        <p><a class="btn btn-primary btn-lg" href="https://github.com/Khadgar/nodevoter" role="button">Github &raquo;</a></p>
+      </div>
+    </div>
+
+    <div class="container">
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
   </body>
 </html>

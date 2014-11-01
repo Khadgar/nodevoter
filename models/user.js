@@ -4,7 +4,10 @@ module.exports = function(mongoose) {
 var Schema = mongoose.Schema;
 var UserDetail = new Schema({
 		username : String,
-		password : String
+		password : String,
+		fullname : String,
+		age		 : String,
+		role	 : String
 	}, {
 		collection : 'userInfo'
 	});

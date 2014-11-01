@@ -40,14 +40,17 @@ var Votes = require(path.join(__dirname, './models/votes.js'))(mongoose);
 //voteresults collection
 var VoteResults = require(path.join(__dirname, './models/voteresults.js'))(mongoose);
 
+//settings collection
+var Settings = require(path.join(__dirname, './models/settings.js'))(mongoose);
+
 //authentication in auth.js
 require(path.join(__dirname, './auth.js'))(passport, LocalStrategy, UserDetails);
 
 //routing in routes.js
-require(path.join(__dirname, './routes/routes.js'))(app,passport,UserDetails,Votes,io);
+require(path.join(__dirname, './routes/routes.js'))(app,passport,UserDetails,Votes,VoteResults,Settings,io);
 
 //decision making in decision.js
-require(path.join(__dirname, './decision.js'))(VoteResults, Votes, io);
+require(path.join(__dirname, './decision.js'))(VoteResults, Votes, Settings, io);
 
 
 //create server
