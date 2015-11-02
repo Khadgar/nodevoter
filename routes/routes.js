@@ -1,7 +1,7 @@
 var path = require('path');
 var ejs = require('ejs');
 var fs = require('fs');
-var five = require("johnny-five");
+//var five = require("johnny-five");
 
 var led;
 
@@ -238,51 +238,51 @@ module.exports = function (app, passport, UserDetails, Votes, VoteResults, Setti
 		res.redirect('/');
 	});
 
-	app.get('/led', function (req, res, next) {
-		res.sendfile(path.join(__dirname, '../views/led.html'));
-	});
+	//app.get('/led', function (req, res, next) {
+	//	res.sendfile(path.join(__dirname, '../views/led.html'));
+	//});
 
 	//Initializing the board and the led
-	var board = new five.Board();
-	board.on("ready", function () {
-		led = new five.Led({
-				pin : 5
-			});
-		console.log('LED initialized!');
-	});
+	// var board = new five.Board();
+	// board.on("ready", function () {
+		// led = new five.Led({
+				// pin : 5
+			// });
+		// console.log('LED initialized!');
+	// });
 
-	var brightness = 0;
+	// var brightness = 0;
 
 	//Increase the brightness of the LED
-	app.post('/ledon', function (req, res) {
+	// app.post('/ledon', function (req, res) {
 		//led.on();
-		if (brightness < 255) {
-			brightness += 15;
-			led.brightness(brightness);
-			console.log('brightness: ' + brightness);
-		} else if (brightness == 255) {
-			brightness = 0;
-			led.brightness(brightness);
-			console.log('brightness: ' + brightness);
-		}
+		// if (brightness < 255) {
+			// brightness += 15;
+			// led.brightness(brightness);
+			// console.log('brightness: ' + brightness);
+		// } else if (brightness == 255) {
+			// brightness = 0;
+			// led.brightness(brightness);
+			// console.log('brightness: ' + brightness);
+		// }
 
-		res.redirect('/led');
-	});
+		// res.redirect('/led');
+	// });
 
 	//Decrease the brightness of the LED
-	app.post('/ledoff', function (req, res) {
+	// app.post('/ledoff', function (req, res) {
 		//led.off();
-		if (brightness > 0) {
-			brightness -= 15;
-			led.brightness(brightness);
-			console.log('brightness: ' + brightness);
-		} else if (brightness == 0) {
-			brightness = 255;
-			led.brightness(brightness);
-			console.log('brightness: ' + brightness);
-		}
-		res.redirect('/led');
-	});
+		// if (brightness > 0) {
+			// brightness -= 15;
+			// led.brightness(brightness);
+			// console.log('brightness: ' + brightness);
+		// } else if (brightness == 0) {
+			// brightness = 255;
+			// led.brightness(brightness);
+			// console.log('brightness: ' + brightness);
+		// }
+		// res.redirect('/led');
+	// });
 
 	app.get('/loginSuccess', function (req, res, next) {
 		res.redirect('/personal');
